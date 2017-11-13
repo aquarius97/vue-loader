@@ -1,28 +1,32 @@
 <template>
-  <div class="filter-box">
-            <div class="selected-condations clearfix">
-                <div class="left-title">已选条件 : </div>
-                <div class="right-area">
-                    <p class="selected-item" v-if="selected_range_item!='不限'">
-                        {{selected_range_item}} 
-                        <span class="clear-selected" @click="clearRange">X</span>
+    <div class="filter-box">
+        <div class="selected-condations clearfix">
+            <div class="left-title">已选条件 : </div>
+            <div class="right-area">
+                <p class="selected-item" v-if="selected_range_item!='不限'">
+                    {{selected_range_item}} 
+                    <span class="clear-selected" @click="clearRange">X</span>
+                </p>
+                <p class="selected-item" v-if="selected_area_item!='不限'">
+                     {{selected_area_item}} 
+                    <span class="clear-selected" @click="clearArea">X</span>
                     </p>
-                    <p class="selected-item" v-if="selected_area_item!='不限'">
-                        {{selected_area_item}} 
-                        <span class="clear-selected" @click="clearArea">X</span>
-                        </p>
-                </div>
             </div>
-            <div class="condations-box">
-                <major-range :major-range-list="$store.state.major_range_obj"></major-range>
-                <school-range :school-range-list="$store.state.school_range_obj"></school-range>
-                <school-area :school-area-list="$store.state.school_area_obj"></school-area>
-            </div>
-         
-    <div class="remind">*科目比例：要求所选选考科目的专业总数/条件范围内专业总数。以专业为例：经济统计学专业历史所占比例为66.7%，意为选考历史，66.7%的经济统计学专业均可报考。</div>
+        </div>
+         <div class="condations-box">
+            <major-range :major-range-list="$store.state.major_range_obj"></major-range>
+            <school-range :school-range-list="$store.state.school_range_obj"></school-range>
+            <school-area :school-area-list="$store.state.school_area_obj"></school-area>
+        </div>
+        <div class="remind">*科目比例：要求所选选考科目的专业总数/条件范围内专业总数。以专业为例：经济统计学专业历史所占比例为66.7%，意为选考历史，66.7%的经济统计学专业均可报考。</div>
         <tab-view class="tab_list" :title_="tab_title" :list_="tab_left_list"></tab-view>
         <tab-view class="tab_list" :title_="tab_title" :list_="tab_right_list"></tab-view>
         <div class="clearfix"></div>
+        <div class="table">
+            <table-wrap :title="table_title">
+                <table-row v-for="(x,i) in row_list" :row="x" :key="i"></table-row>
+            </table-wrap>
+        </div>
   </div>
 </template>
 <script>
@@ -31,12 +35,16 @@ import school_area from "../compontent/school_area";
 import major_range from "../compontent/major_range";
 import { mapMutations } from "vuex";
 import tab_view from "../compontent/table_view";
+import table_wrap from "../compontent/table_wrap";
+import table_row from "../compontent/table_row";
 export default {
   data: function() {
     return {
-      tab_title:[],
-            tab_left_list:[],
-            tab_right_list:[]
+      tab_title: [],
+      tab_left_list: [],
+      tab_right_list: [],
+      table_title: [],
+      row_list: []
     };
   },
   computed: {
@@ -54,7 +62,9 @@ export default {
     "school-range": school_range,
     "school-area": school_area,
     "major-range": major_range,
-    "tab-view": tab_view
+    "tab-view": tab_view,
+    "table-wrap": table_wrap,
+    "table-row": table_row
   },
   created: function() {
     let vm = this;
@@ -100,7 +110,7 @@ export default {
       });
       vm.$store.commit("update_major_range", major_data);
     });
-    this.$http("src/server/general.json").then(function(res) {
+    this.$http.get("src/server/general.json").then(function(res) {
       vm.tab_title = res.data.result.title;
       var tab_list = res.data.result.analysisData;
       var left_arr = [];
@@ -123,6 +133,10 @@ export default {
       vm.tab_right_list = right_arr;
       vm.college_title = res.data.result.title;
       vm.college_detail = res.data.result.rows;
+    });
+    this.$http.get("src/server/overall.json").then(res => {
+      vm.table_title = res.data.result.title;
+      vm.row_list = res.data.result.rows;
     });
   },
   methods: {
@@ -238,5 +252,13 @@ export default {
 .clearfix {
   clear: both;
 }
+.table table{
+    width: 100%;
+    text-align:center;
+}
+.table td{
+    padding:8px 0;
+}
+.table tr{}
 </style>
 
