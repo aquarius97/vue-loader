@@ -1,0 +1,14 @@
+专业名称模糊匹配接口
+ http://10.0.0.132:8088/mockjs/31/chooseExam/getNamesByKeyword.action?type=&keyword=
+
+专业层次接口
+ http://10.0.0.132:8088/mockjs/31/chooseExam/majorLevels?type=
+
+综合检索-已选条件接口
+ http://10.0.0.132:8088/mockjs/31/chooseExam/selectedConditions?
+
+综合检索接口
+ http://10.0.0.132:8088/mockjs/31/chooseExam/search/?collegeArea=%7B%22provinces%22%3A%5B%22%E5%8C%97%E4%BA%AC%22%2C%22%E4%B8%8A%E6%B5%B7%22%2C%22%E6%B5%99%E6%B1%9F%22%5D%7D&type=0&schoolLevel=%22985%E5%B7%A5%E7%A8%8B%22&majorName=%22%E9%87%91%E8%9E%8D%E5%AD%A6%22&pageNum=1&collegeName=%22%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%22&majors=%7B%22majors%22%3A%5B%22%E9%87%91%E8%9E%8D%E5%AD%A6%22%2C%22%E8%B4%A2%E6%94%BF%E5%AD%A6%22%2C%22%E5%93%B2%E5%AD%A6%22%2C%22%E4%BF%9D%E9%99%A9%E5%AD%A6%22%5D%7D
+
+选考科目分析接口
+ http://10.0.0.132:8088/mockjs/31/chooseExam/subjectAnalysis?provinces=%7B%22provinces%22%3A%5B%22%E5%8C%97%E4%BA%AC%22%2C%22%E4%B8%8A%E6%B5%B7%22%2C%22%E6%B5%99%E6%B1%9F%22%5D%7D&schoolLevel=&majors=&type=0&collegeName=&majorName=
