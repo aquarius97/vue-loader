@@ -1,7 +1,7 @@
 <template>
     <tbody>
         <tr>
-            <td v-for="(item, index) in item_row" :key='index'><span v-if="index==0" class="add" @click="table_show">+</span>{{item}}</td>
+            <td v-for="(item, index) in item_row" :key='index'><span v-if="index==0" class="add" @click="table_show">{{adr}}</span>{{item}}</td>
         </tr>
         <tr>
             <td colspan='9'>
@@ -34,7 +34,9 @@ export default {
         return {
             item_row:[],
             item_table:[],
-            active:false
+            active:false,
+            adr:"+"
+
         }
     },
     created:function(){
@@ -44,7 +46,12 @@ export default {
     },
     methods:{
         table_show:function(){
-            this.active=!this.active
+            this.active=!this.active;
+            if(this.active){
+                this.adr="-"
+            }else{
+                this.adr="+"
+            }
         }        
     }
 }
@@ -59,8 +66,9 @@ export default {
     width: 15px;
     height: 15px;
     line-height: 15px;
-    font-size: 15px;
+    font-size: 20px;
     color:#fff;
+    text-align: center;
     background: rgba(0,100,6,1)
 }
 </style>
